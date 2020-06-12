@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id "application"
+}
+
+repositories {
+    // First look for local Apache James dependencies. We can publish code changes locally and work with them
+    // See caveats https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:case-for-maven-local
+    // Maybe avoid mavenLocal and use a directory with jars.
+    // mavenLocal()
+
+    // Next look into snapshots and staging
+    // https://infra.apache.org/repository-faq.html
+
+    maven { url "https://repository.apache.org/content/groups/public/" }
+    maven { url "https://repository.apache.org/content/groups/staging/" }
+    maven { url "https://repository.apache.org/content/groups/snapshots/" }
+
+    mavenCentral()
+    jcenter()
+}
+
+ext {
+    jamesVersion = '3.5.0-SNAPSHOT'
+}
+
+dependencies {
+
+    compile "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+    compile "org.apache.james:james-server-cli:${jamesVersion}"
+
+}
+
+// See https://docs.gradle.org/current/userguide/application_plugin.html#header
+
+application {
+    mainClass = 'org.apache.james.JPAJamesServerMain'
+    // applicationDefaultJvmArgs = ['-Dgreeting.language=en']
+}
