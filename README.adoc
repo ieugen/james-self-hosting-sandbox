@@ -1,0 +1,23 @@
+= Apache James Self Hosting Sandbox
+
+
+A sample project to work on self hosting email server with Apache James.
+It's meant to experiment and collaborate on stuff before pushing it upstream.
+
+It's meant as an exercise and documentation.
+
+Working on https://issues.apache.org/jira/browse/JAMES-3209
+
+
+== How to build and work with this repository
+
+We use `gradle` to assemble Apache James libraries and configurations and produce a custom build James server.
+We leverage Gradle's `application` plugin to assemble all of that into a binary archive that we can distribute.
+
+We take the archive and build a docker image that we can deploy.
+
+[source,bash]
+--
+    # Build the custom server - look under build/distributions/ for results
+    ./gradlew clean build
+--
