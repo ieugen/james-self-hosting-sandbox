@@ -20,4 +20,9 @@ We take the archive and build a docker image that we can deploy.
 --
     # Build the custom server - look under build/distributions/ for results
     ./gradlew clean build
+    # Unpack the distribution and run
+    tar -xvf build/distributions/james-self-hosting-sandbox.tar
+    cd james-self-hosting-sandbox
+    # Run it
+    ./bin/james-self-hosting-sandbox
 --
