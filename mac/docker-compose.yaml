@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  nginx-proxy: 
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/nginx/certs
+    ports:
+      - 443:443
+      - 465:465
+      - 993:993
+      
+  james:
+    image: james-local
+    ports:
+      - 25
+      - 110
+      - 143
+      - 465
+      - 587
+      - 993
+      - 8000
