@@ -1,4 +1,5 @@
 *.jar
+!gradle
 cert.key
 cert.pem
 
@@ -7,3 +8,4 @@ cert.pem
 
 # Ignore Gradle build output directory
 build
+.idea/

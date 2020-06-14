@@ -26,8 +26,8 @@ ext {
 
 dependencies {
 
-    compile "org.apache.james:james-server-jpa-guice:${jamesVersion}"
-    compile "org.apache.james:james-server-cli:${jamesVersion}"
+    implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+    implementation "org.apache.james:james-server-cli:${jamesVersion}"
 
 }
 
