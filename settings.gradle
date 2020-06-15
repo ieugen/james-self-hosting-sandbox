@@ -1,1 +1,5 @@
 rootProject.name = 'james-self-hosting-sandbox'
+
+include ':james-cli'
+include ':james-extensions'
+include ':james-server'

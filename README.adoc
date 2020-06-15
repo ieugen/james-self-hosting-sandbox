@@ -18,11 +18,93 @@ We take the archive and build a docker image that we can deploy.
 
 [source,bash]
 --
-    # Build the custom server - look under build/distributions/ for results
+    # Build the custom server - look under build/distributions/ for results.
+    # Use --refresh-dependencies to force SNAPSHOT updates
     ./gradlew clean build
-    # Unpack the distribution and run
-    tar -xvf build/distributions/james-self-hosting-sandbox.tar
-    cd james-self-hosting-sandbox
+    # Run it from within gradle for local testing the configuration
+    ./gradlew :james-server:run
+    # Copy the archive on production system, unpack the distribution and run
+    tar -xvf james-server/build/distributions/james-server.tar
+    cd james-server
     # Run it
-    ./bin/james-self-hosting-sandbox
+    ./bin/james-server
 --
+
+== Running with docker-compose
+
+
+The recommended way is to run with docker-compose.
+The docker-compose configuration will build the james-server image for you.
+
+[source, bash]
+--
+    # Build james-server-and-cli image and start the services
+    docker-compose up --build -d
+    # See the logs
+    docker-compose logs -f
+
+    # I usually combine them.
+    # I add --build to force build the docker image.
+    docker-compose up -d && docker-compose logs -f
+
+    # When done playing, remove all containers and data volumes
+    docker-compose down -v
+--
+
+
+For completenes we will show how to also build the image with plain docker.
+
+[source,bash]
+--
+    # Build the distributions
+    ./gradlew clean build
+    # Build the docker image
+    docker build -t james-server-and-cli .
+--
+
+== Modules
+
+The modules are meant to be kept independent.
+They share the git repository.
+They are aggregated via docker only.
+
+
+james-server:: This module builds the email server application
+james-cli:: This module builds the command line utility for using it with a server
+james-extensions:: This module contains sample code on how to extend James server
+
+
+=== James server
+
+This module builds the email server.
+It depends on the `james-extensions` gradle module so it will include all the customizations from there.
+It uses gradle application plugin to package all java libraries into a `lib` directory.
+The application plugin also provides nice linux and windows startup scripts that we can customize.
+
+
+You can run james server locally via gradle (curtosy of application plugin)
+
+[source,bash]
+--
+    # Run the server with
+    ./gradlew clean build :james-server:runJamesServer
+--
+
+=== James Extensions
+
+This module should contain code samples on how to extend Apache James.
+
+We are talking about:
+* a simple NoOP mailet
+* a SMTP hook
+* Mailbox Listener
+
+The extensions module is built as a library and included in the final james-server application.
+
+=== James CLI
+
+This module provides the CLI for James server administration.
+It is also built with the gradle application plugin and provides a bash script for calling it.
+
+James CLI uses a JMX over HTTP connection to operate so it will need access to the administration port.
+

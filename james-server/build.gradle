@@ -1,0 +1,47 @@
+plugins {
+  id 'java'
+  id "application"
+}
+
+ext {
+  jamesVersion = '3.5.0-SNAPSHOT'
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}
+
+dependencies {
+
+  implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+
+  // add the custom extensions project
+  implementation project(":james-extensions")
+
+  // Add other dependencies
+  //   implementation 'org.apache.james:apache-crypto-mailets:1.0'
+
+}
+
+// See https://docs.gradle.org/current/userguide/application_plugin.html#header
+
+application {
+  mainClass = 'org.apache.james.JPAJamesServerMain'
+
+  applicationDefaultJvmArgs = [
+//   '-javaagent:$APACHE_JAMES_SERVER_INSTALL_PREFIX/lib/openjpa-3.1.0.jar',
+//   '-javaagent:$APACHE_JAMES_SERVER_INSTALL_PREFIX/lib/glowroot.jar',
+  '-Dlogback.configurationFile=$APACHE_JAMES_SERVER_INSTALL_PREFIX/conf/logback.xml',
+  '-Dworking.directory=$APACHE_JAMES_SERVER_WORKDIR']
+}
+
+task runJamesServer(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'org.apache.james.JPAJamesServerMain'
+
+  // arguments to pass to the application
+  jvmArgs "-Dlogback.configurationFile=${project.projectDir}/conf/logback.xml"
+  jvmArgs '-Dworking.directory=${project.directory}'
+}

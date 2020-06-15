@@ -13,8 +13,8 @@ services:
 
   james:
     build:
-      context: local
-    image: james-local
+      context: .
+    image: james-server-and-cli
     ports:
       - 25
       - 110
