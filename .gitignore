@@ -16,3 +16,10 @@ build
 .settings
 
 target/
+
+
+
+write.lock
+/var/
+derby.log
+logs/
