@@ -1,13 +1,33 @@
 plugins {
-    id 'java'
-    id "application"
+  id "com.diffplug.gradle.spotless" version "4.3.0"
 }
 
-repositories {
+spotless {
+  format 'misc', {
+    target '**/*.gradle', '**/*.md', '**/.gitignore'
+
+    trimTrailingWhitespace()
+    indentWithSpaces(2) // or spaces. Takes an integer argument if you don't like 4
+    endWithNewline()
+  }
+
+  // java {
+  //   googleJavaFormat()
+  // }
+
+}
+
+subprojects {
+
+  ext {
+    jamesVersion = '3.6.0-SNAPSHOT'
+  }
+
+  repositories {
     // First look for local Apache James dependencies. We can publish code changes locally and work with them
     // See caveats https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:case-for-maven-local
     // Maybe avoid mavenLocal and use a directory with jars.
-    // mavenLocal()
+    mavenLocal()
 
     // Next look into snapshots and staging
     // https://infra.apache.org/repository-faq.html
@@ -18,22 +38,5 @@ repositories {
 
     mavenCentral()
     jcenter()
-}
-
-ext {
-    jamesVersion = '3.5.0-SNAPSHOT'
-}
-
-dependencies {
-
-    implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
-    implementation "org.apache.james:james-server-cli:${jamesVersion}"
-
-}
-
-// See https://docs.gradle.org/current/userguide/application_plugin.html#header
-
-application {
-    mainClass = 'org.apache.james.JPAJamesServerMain'
-    // applicationDefaultJvmArgs = ['-Dgreeting.language=en']
+  }
 }

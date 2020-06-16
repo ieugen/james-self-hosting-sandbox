@@ -1,24 +1,27 @@
 version: '3'
 services:
 
-  nginx-proxy:
-    image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./certs:/etc/nginx/certs
-    ports:
-      - 443:443
-      - 465:465
-      - 993:993
-
+  # nginx-proxy:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #     - ./certs:/etc/nginx/certs
+  #   ports:
+  #     - 443:443
+  #     - 465:465
+  #     - 993:993
   james:
     build:
-      context: local
-    image: james-local
+      context: .
+    image: james-server-and-cli
+    volumes:
+      - ./conf:/opt/apache-james/james-server/conf/
+    environment:
+      - JAVA_OPTS=-Dlogback.configurationFile="/opt/apache-james/james-server/conf/logback.xml" -Dworking.directory="/opt/apache-james/james-server"
     ports:
       - 25
       - 110
-      - 143:143
+      - 143
       - 465
       - 587
       - 993

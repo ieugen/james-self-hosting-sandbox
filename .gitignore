@@ -9,3 +9,17 @@ cert.pem
 # Ignore Gradle build output directory
 build
 .idea/
+
+.vscode
+.project
+.classpath
+.settings
+
+target/
+
+
+
+write.lock
+/var/
+derby.log
+logs/
