@@ -21,13 +21,10 @@ We take the archive and build a docker image that we can deploy.
     # Build the custom server - look under build/distributions/ for results.
     # Use --refresh-dependencies to force SNAPSHOT updates
     ./gradlew clean build
+    # run via docker-compose
+    docker-compose up -d && docker-compose logs -f
     # Run it from within gradle for local testing the configuration
     ./gradlew :james-server:run
-    # Copy the archive on production system, unpack the distribution and run
-    tar -xvf james-server/build/distributions/james-server.tar
-    cd james-server
-    # Run it
-    ./bin/james-server
 --
 
 == Running with docker-compose
@@ -100,6 +97,64 @@ We are talking about:
 * Mailbox Listener
 
 The extensions module is built as a library and included in the final james-server application.
+
+==== Mailets and matchers
+
+Samples for mailets and matchers are in `ro.ieugen.sample.mailets` package.
+
+The steps are as follows:
+
+* Implement a matcher and/or a mailet class
+* Add them to the classpath of james-server
+* Configure them in mailetcontainer.xml
+
+.ro.ieugen.sample.mailets.LogAndDoNothingMailet.java
+[source,java]
+--
+@Slf4j
+public class LogAndDoNothingMailet extends GenericMailet {
+
+  @Override
+  public void init() throws MessagingException {
+    log.info("initialize mailet");
+  }
+
+  @Override
+  public void service(Mail mail) throws MessagingException {
+    log.info("Service the email {}", mail.getName());
+  }
+}
+--
+
+.ro.ieugen.sample.mailets.MatcherMadeInHeaven.java
+[source,java]
+--
+@Slf4j
+public class MatcherMadeInHeaven extends GenericMatcher {
+
+  @Override
+  public void init() throws MessagingException {
+    log.info("Build Heaven. Initialize matcher");
+  }
+
+  @Override
+  public Collection<MailAddress> match(Mail mail) throws MessagingException {
+    log.info("Matching for heaven {}", mail.getName());
+    return Collections.emptyList();
+  }
+}
+--
+
+.mailetcontainer.xml
+[source,xml]
+--
+    <processor state="do-nothing-mailet" enableJmx="false">
+      <mailet match="All" class="ro.ieugen.sample.mailets.LogAndDoNothingMailet"/>
+
+      <mailet match="ro.ieugen.sample.mailets.MatcherMadeInHeaven"
+        class="ro.ieugen.sample.mailets.LogAndDoNothingMailet"/>
+    </processor>
+--
 
 === James CLI
 
