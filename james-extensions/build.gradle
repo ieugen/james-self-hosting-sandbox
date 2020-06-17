@@ -6,3 +6,14 @@ java {
   sourceCompatibility = JavaVersion.VERSION_11
   targetCompatibility = JavaVersion.VERSION_11
 }
+
+
+dependencies {
+
+  annotationProcessor 'org.projectlombok:lombok:1.18.12'
+  compileOnly 'org.projectlombok:lombok:1.18.12'
+  testCompileOnly 'org.projectlombok:lombok:1.18.12'
+
+  implementation "org.apache.james:apache-mailet-base:${jamesVersion}"
+
+}
