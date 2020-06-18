@@ -1,3 +1,10 @@
+################################################################################
+# Dockerfile for a Customer James Server
+#
+# Use this as a sandbox to build your own customer James Server
+#
+################################################################################
+
 # some global args
 
 ARG install_prefix="/opt/apache-james"
@@ -8,7 +15,7 @@ FROM adoptopenjdk:11-jre-hotspot as unpack
 ARG install_prefix
 
 COPY james-cli/build/distributions/james-cli.tar /tmp/james-cli.tar
-COPY james-server/build/distributions/james-server.tar /tmp/james-server.tar
+COPY james-custom-server/build/distributions/james-custom-server.tar /tmp/james-server.tar
 
 RUN mkdir -p "${install_prefix}" \
     && tar -xvf /tmp/james-cli.tar --directory "${install_prefix}" \
@@ -35,11 +42,11 @@ EXPOSE 25 110 143 465 587 993 8000
 COPY --from=unpack $install_prefix ${install_prefix}
 
 # We are going to mount the configuraton as a volume
-# COPY conf ${install_prefix}/james-server/conf
+# COPY conf ${install_prefix}/james-custom-server/conf
 
-WORKDIR ${install_prefix}/james-server
+WORKDIR ${install_prefix}/james-custom-server
 
 # Add start scripts to path
-ENV PATH="${PATH}:${install_prefix}/james-server/bin:${install_prefix}/james-cli/bin"
+ENV PATH="${PATH}:${install_prefix}/james-custom-server/bin:${install_prefix}/james-cli/bin"
 
-ENTRYPOINT james-server
+ENTRYPOINT james-custom-server

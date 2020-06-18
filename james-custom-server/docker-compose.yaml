@@ -1,0 +1,20 @@
+version: '3'
+services:
+
+  james:
+    build:
+      context: ..
+      dockerfile: james-custom-server/Dockerfile
+    image: james-server-and-cli
+    volumes:
+      - ./conf:/opt/apache-james/james-custom-server/conf/
+    environment:
+      - JAVA_OPTS=-Dlogback.configurationFile="/opt/apache-james/james-custom-server/conf/logback.xml" -Dworking.directory="/opt/apache-james/james-custom-server"
+    ports:
+      - "25"
+      - "110"
+      - "143"
+      - "465"
+      - "587"
+      - "993"
+      - "8000:8000"

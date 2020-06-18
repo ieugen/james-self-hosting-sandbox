@@ -1,0 +1,29 @@
+plugins {
+  id 'java'
+  id "application"
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}
+
+dependencies {
+  implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+}
+
+// See https://docs.gradle.org/current/userguide/application_plugin.html#header
+
+application {
+  mainClass = 'org.apache.james.JPAJamesServerMain'
+}
+
+task runJamesServer(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'org.apache.james.JPAJamesServerMain'
+
+  // arguments to pass to the application
+  jvmArgs "-Dlogback.configurationFile=${project.rootDir}/conf/logback.xml"
+  jvmArgs "-Dworking.directory=${project.rootDir}/"
+}

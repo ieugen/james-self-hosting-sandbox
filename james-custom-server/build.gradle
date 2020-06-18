@@ -35,5 +35,5 @@ task runJamesServer(type: JavaExec) {
 
   // arguments to pass to the application
   jvmArgs "-Dlogback.configurationFile=${project.rootDir}/conf/logback.xml"
-  jvmArgs "-Dworking.directory=${project.rootDir}/"
+  jvmArgs "-Dworking.directory=${project.rootDir}/james-custom-server"
 }

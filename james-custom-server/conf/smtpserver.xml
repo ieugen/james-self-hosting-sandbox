@@ -22,9 +22,10 @@
 <!-- Read https://james.apache.org/server/config-smtp-lmtp.html#SMTP_Configuration for further details -->
 
 <smtpservers>
-    <smtpserver enabled="false">
+    <smtpserver enabled="true">
         <jmxName>smtpserver-global</jmxName>
-        <bind>0.0.0.0:25</bind>
+        <!--bind>0.0.0.0:25</bind-->
+        <bind>127.0.0.9:25</bind>
         <connectionBacklog>200</connectionBacklog>
         <tls socketTLS="false" startTLS="false">
             <keystore>file://conf/keystore</keystore>
@@ -48,7 +49,8 @@
     </smtpserver>
     <smtpserver enabled="true">
         <jmxName>smtpserver-TLS</jmxName>
-        <bind>0.0.0.0:465</bind>
+        <!--bind>0.0.0.0:465</bind-->
+        <bind>127.0.0.9:465</bind>
         <connectionBacklog>200</connectionBacklog>
         <tls socketTLS="false" startTLS="false">
             <keystore>file://conf/keystore</keystore>
@@ -68,15 +70,16 @@
         <verifyIdentity>false</verifyIdentity>
         <maxmessagesize>0</maxmessagesize>
         <addressBracketsEnforcement>true</addressBracketsEnforcement>
-        <smtpGreeting>Apache James SMTP Server</smtpGreeting>
+        <smtpGreeting>JAMES Linagora's SMTP awesome Server</smtpGreeting>
         <handlerchain>
             <handler class="org.apache.james.smtpserver.fastfail.ValidRcptHandler"/>
             <handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/>
         </handlerchain>
     </smtpserver>
-    <smtpserver enabled="false">
+    <smtpserver enabled="true">
         <jmxName>smtpserver-authenticated</jmxName>
-        <bind>0.0.0.0:587</bind>
+        <!--bind>0.0.0.0:587</bind-->
+        <bind>127.0.0.9:587</bind>
         <connectionBacklog>200</connectionBacklog>
         <tls socketTLS="false" startTLS="false">
             <keystore>file://conf/keystore</keystore>
