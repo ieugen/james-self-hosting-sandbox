@@ -16,20 +16,22 @@ dependencies {
   implementation project(":james-extensions")
 
   // Add other dependencies
-  //   implementation 'org.apache.james:apache-crypto-mailets:1.0'
+//  implementation 'org.apache.james:apache-crypto-mailets:1.0'
 
 }
 
 // See https://docs.gradle.org/current/userguide/application_plugin.html#header
 
+def myMainClass = 'ro.ieugen.sample.guice.MyCustomServerMain'
+
 application {
-  mainClass = 'org.apache.james.JPAJamesServerMain'
+  mainClass = myMainClass
 }
 
 task runJamesServer(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
 
-  main = 'org.apache.james.JPAJamesServerMain'
+  main = myMainClass
 
   // arguments to pass to the application
   jvmArgs "-Dlogback.configurationFile=${project.rootDir}/conf/logback.xml"
