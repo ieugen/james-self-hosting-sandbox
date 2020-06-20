@@ -1,3 +1,10 @@
+################################################################################
+# Dockerfile for the James Basic Server
+#
+# See: [link]
+#
+################################################################################
+
 # some global args
 
 ARG install_prefix="/opt/apache-james"
@@ -20,17 +27,20 @@ FROM adoptopenjdk:11-jre-hotspot as james_server_and_cli
 
 ARG install_prefix
 
-# Ports:
+# Provided Services:
 #
+#   465  SMTP with authentication and socketTLS enabled
+#   993  IMAP with socketTLS enabled
+#   8000 Web Admin
+#
+# Services that are NOT provided:
+# 
 #   25   SMTP without authentication
 #   110  POP3
 #   143  IMAP with startTLS enabled
-#   465  SMTP with authentication and socketTLS enabled
 #   587  SMTP with authentication and startTLS enabled
-#   993  IMAP with socketTLS enabled
-#   8000 Web Admin
 
-EXPOSE 25 110 143 465 587 993 8000
+EXPOSE 465 993 8000
 
 COPY --from=unpack $install_prefix ${install_prefix}
 

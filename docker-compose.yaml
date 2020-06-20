@@ -19,10 +19,6 @@ services:
     environment:
       - JAVA_OPTS=-Dlogback.configurationFile="/opt/apache-james/james-server/conf/logback.xml" -Dworking.directory="/opt/apache-james/james-server"
     ports:
-      - 25
-      - 110
-      - 143
-      - 465
-      - 587
-      - 993
-      - 8000:8000
+      - "465"
+      - "993"
+      - "8000:8000"
