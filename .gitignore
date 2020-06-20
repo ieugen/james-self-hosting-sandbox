@@ -3,6 +3,9 @@
 cert.key
 cert.pem
 
+# For jenv
+.java-version
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
