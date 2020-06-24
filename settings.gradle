@@ -1,5 +1,11 @@
 rootProject.name = 'james-self-hosting-sandbox'
 
+// Custom workspace
 include ':james-cli'
 include ':james-extensions'
-include ':james-server'
+include ':james-custom-server'
+
+// James workspace
+include ':james-basic-server'
+// Will work on this one later. Just a placeholder for now
+//include ':james-extendable-server'

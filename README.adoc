@@ -55,8 +55,8 @@ For completenes we will show how to also build the image with plain docker.
 --
     # Build the distributions
     ./gradlew clean build
-    # Build the docker image
-    docker build -t james-server-and-cli .
+    # Build the docker image from the top directory
+    docker build -t james-server-and-cli -f james-custom-server/Dockerfile .
 --
 
 == Modules
