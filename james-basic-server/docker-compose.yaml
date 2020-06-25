@@ -14,6 +14,6 @@ services:
         -Dlogback.configurationFile="/opt/apache-james/james-basic-server/conf/logback.xml" 
         -Dworking.directory="/opt/apache-james/james-basic-server"
     ports:
-      - "465"
-      - "993"
+      - "9465:465"
+      - "9993:993"
       - "8000:8000"
