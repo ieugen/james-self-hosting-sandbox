@@ -8,8 +8,11 @@ services:
     image: james-basic-server
     volumes:
       - ./conf:/opt/apache-james/james-basic-server/conf/
+      - ./logs:/opt/apache-james/james-basic-server/logs/
     environment:
-      - JAVA_OPTS=-Dlogback.configurationFile="/opt/apache-james/james-basic-server/conf/logback.xml" -Dworking.directory="/opt/apache-james/james-basic-server"
+      - JAVA_OPTS=
+        -Dlogback.configurationFile="/opt/apache-james/james-basic-server/conf/logback.xml" 
+        -Dworking.directory="/opt/apache-james/james-basic-server"
     ports:
       - "465"
       - "993"
