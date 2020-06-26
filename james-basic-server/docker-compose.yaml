@@ -17,3 +17,11 @@ services:
       - "9465:465"
       - "9993:993"
       - "8000:8000"
+
+  james-cli:
+    build:
+      context: ..
+      dockerfile: james-cli/Dockerfile
+    image: james-cli
+    ports:
+      - "9999:9999"

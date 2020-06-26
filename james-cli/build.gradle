@@ -1,6 +1,7 @@
 plugins {
   id 'java'
   id "application"
+  id "com.github.johnrengelman.shadow" version "6.0.0"
 }
 
 java {
@@ -10,10 +11,15 @@ java {
 
 dependencies {
   implementation "org.apache.james:james-server-cli:${jamesVersion}"
+  implementation "ch.qos.logback:logback-core:1.2.3"
+  implementation "ch.qos.logback:logback-classic:1.2.3"
 }
 
 // See https://docs.gradle.org/current/userguide/application_plugin.html#header
 
+def myMainClass = 'org.apache.james.cli.ServerCmd'
+
 application {
-  mainClass = 'org.apache.james.cli.ServerCmd'
+  mainClass = myMainClass
+  mainClassName = myMainClass
 }
