@@ -5,7 +5,7 @@
 
      <jmxName>smtpserver</jmxName>
 
-     <bind>0.0.0.0:25</bind>
+     <bind>0.0.0.0:465</bind>
 
      <connectionBacklog>200</connectionBacklog>
 
@@ -21,7 +21,7 @@
        <algorithm>SunX509</algorithm>
      </tls>
       
-     <!--helloName autodetect="true">Apache James Basic Server</helloName-->
+     <helloName autodetect="false">whatisthis</helloName>
      <connectiontimeout>360</connectiontimeout>
      <connectionLimit>0</connectionLimit>
      <connectionLimitPerIP>0</connectionLimitPerIP>
@@ -32,6 +32,11 @@
      <heloEhloEnforcement>true</heloEhloEnforcement>
      <addressBracketsEnforcement>true</addressBracketsEnforcement>
      <smtpGreeting>Apache James Basic SMTP Server</smtpGreeting>
+     <handlerchain>
+       <handler class="org.apache.james.smtpserver.fastfail.ValidRcptHandler"/>
+       <handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/>
+     </handlerchain>
+
    </smtpserver>
 
 </smtpservers>

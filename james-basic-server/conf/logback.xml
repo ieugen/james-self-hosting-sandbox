@@ -63,17 +63,17 @@
         <!--+
             | Set the default root logger level to DEBUG for diagnostic output.
             +-->
-        <root level="DEBUG">
+        <root level="WARN">
                 <appender-ref ref="DIAGNOSTIC_FILE" />
         </root>
 
         <!--+
             | Package-specific levels for Operator output.
             +-->
-        <logger name="o" level="NONE" additivity="false">
-            <appender-ref ref="OPERATOR_CONSOLE" />
+        <logger name="org.apache.james" level="INFO" additivity="false">
+            <appender-ref ref="DIAGNOSTIC_FILE" />
         </logger>
-        <logger name="openjap" level="NONE" additivity="false">
+        <logger name="openjpa" level="NONE" additivity="false">
             <appender-ref ref="OPERATOR_CONSOLE" />
         </logger>
 
