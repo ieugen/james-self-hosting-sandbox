@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  james:
+    build:
+      context: ..
+      dockerfile: james-extendable-server/Dockerfile
+    image: james-extendable-server
+    volumes:
+      - ./conf:/opt/apache-james/james-extendable-server/conf/
+      - ./logs:/opt/apache-james/logs/
+    environment:
+      - JAVA_OPTS=
+        -Dlogback.configurationFile="/opt/apache-james/james-extendable-server/conf/logback.xml" 
+        -Dworking.directory="/opt/apache-james/james-extendable-server"
+    ports:
+      - "9465:465"
+      - "9993:993"
+    entrypoint: ["james-extendable-server"]

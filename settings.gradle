@@ -7,5 +7,4 @@ include ':james-custom-server'
 
 // James workspace
 include ':james-basic-server'
-// Will work on this one later. Just a placeholder for now
-//include ':james-extendable-server'
+include ':james-extendable-server'
