@@ -1,0 +1,4 @@
+= Technical Details
+
+We use `gradle` to assemble Apache James libraries and configurations and produce a custom build James server.
+We leverage Gradle's `application` plugin to assemble all of that into a binary archive that we can distribute.

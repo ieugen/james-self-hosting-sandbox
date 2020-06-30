@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec james-basic-server_james_1 james-cli $@

@@ -22,7 +22,8 @@
    This template file can be used as example for James Server configuration
    DO NOT USE IT AS SUCH AND ADAPT IT TO YOUR NEEDS
 -->
- 
+
+<!-- Source: https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra/destination/conf/managesieveserver.xml --> 
 <!-- See http://james.apache.org/server/3/config.html for usage -->
 
 <managesieveservers>
@@ -61,5 +62,3 @@
    </managesieveserver>
 
 </managesieveservers>
-
-

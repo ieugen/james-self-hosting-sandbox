@@ -18,26 +18,18 @@
   under the License.                                           
  -->
 
-<!-- Read https://james.apache.org/server/config-pop3.html for further details -->
+<!-- Source: https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra/destination/conf/listeners.xml -->
+<!-- Read https://james.apache.org/server/config-listeners.html for further details -->
 
-<pop3servers>
-    <pop3server enabled="false">
-        <jmxName>pop3server</jmxName>
-        <bind>0.0.0.0:110</bind>
-        <connectionBacklog>200</connectionBacklog>
-        <tls socketTLS="false" startTLS="false">
-            <!-- To create a new keystore execute:
-                  keytool -genkey -alias james -keyalg RSA -keystore /path/to/james/conf/keystore
-             -->
-            <keystore>file://conf/keystore</keystore>
-            <secret>james72laBalle</secret>
-            <provider>org.bouncycastle.jce.provider.BouncyCastleProvider</provider>
-        </tls>
-        <connectiontimeout>1200</connectiontimeout>
-        <connectionLimit>0</connectionLimit>
-        <connectionLimitPerIP>0</connectionLimitPerIP>
-        <handlerchain>
-            <handler class="org.apache.james.pop3server.core.CoreCmdHandlerLoader"/>
-        </handlerchain>
-    </pop3server>
-</pop3servers>
+<listeners>
+  <listener>
+    <class>org.apache.james.mailbox.spamassassin.SpamAssassinListener</class>
+    <async>true</async>
+  </listener>
+  <listener>
+    <class>org.apache.james.mailbox.cassandra.MailboxOperationLoggingListener</class>
+  </listener>
+  <preDeletionHook>
+    <class>org.apache.james.vault.DeletedMessageVaultHook</class>
+  </preDeletionHook>
+</listeners>

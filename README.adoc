@@ -1,53 +1,97 @@
 = Apache James Self Hosting Sandbox
 
+James does not work "out-of-the box". You have a bit of work to do to make it run.
+To operate a James server, you must first configure and build it.
 
-A sample project to work on self hosting email server with Apache James.
-It's meant to experiment and collaborate on stuff before pushing it upstream.
+This repository provides an environment for allowing you to configure and build your own James server.
 
-It's meant as an exercise and documentation.
+Related issues:
 
-Working on https://issues.apache.org/jira/browse/JAMES-3209
+ * https://issues.apache.org/jira/browse/JAMES-3209
 
+See `DETAILS.adoc` for additional technical details about this project.
 
-== How to build and work with this repository
+== James Servers
 
-We use `gradle` to assemble Apache James libraries and configurations and produce a custom build James server.
-We leverage Gradle's `application` plugin to assemble all of that into a binary archive that we can distribute.
+You have two choices of James Servers to choose from:
 
-We take the archive and build a docker image that we can deploy.
+ 1. James Basic Server - use this if you are not familiar with James
+ 1. James Custom Server - use this if you know what you are doing
+
+== How to build a Basic Server
+
+(TODO)
+
+== How to build a Custom Server
+
+=== Configure the Server
+
+Choose from the template files in the `./conf` directory for those components that you wish to configure
+differently from the default configuration and copy to `./james-custom-server/conf`.
+
+=== Build the base James Distribution
+
+Build a base James distribution and base the Custom Server on this distribution:
 
 [source,bash]
 --
-    # Build the custom server - look under build/distributions/ for results.
-    # Use --refresh-dependencies to force SNAPSHOT updates
+    # Run the build from the top directory of the project
+    cd $PROJECT_DIR
+    # Note: you can use --refresh-dependencies to force SNAPSHOT updates
     ./gradlew clean build
-    # run via docker-compose
-    docker-compose up -d && docker-compose logs -f
-    # Run it from within gradle for local testing the configuration
-    ./gradlew :james-server:run
+    # Look under build/distributions/ for results.
 --
 
-== Running with docker-compose
+=== Build and Run the Custom Server with docker-compose
 
-
-The recommended way is to run with docker-compose.
-The docker-compose configuration will build the james-server image for you.
+The recommended way is to run the Custom Server is with docker-compose.
+The docker-compose configuration will build the james-server image for you
+so you do not need to run `docker build`.
 
 [source, bash]
 --
     # Build james-server-and-cli image and start the services
+    # Note: use --build to force build the docker image
     docker-compose up --build -d
     # See the logs
     docker-compose logs -f
+--
 
-    # I usually combine them.
-    # I add --build to force build the docker image.
-    docker-compose up -d && docker-compose logs -f
+You can save a few steps this way:
 
-    # When done playing, remove all containers and data volumes
+[source, bash]
+--
+    docker-compose up --build -d && docker-compose logs -f
+--
+
+When you are done playing, remove all containers and data volumes:
+
+[source, bash]
+--
     docker-compose down -v
 --
 
+=== Debugging
+
+If you need to debug the code, follow these instructions.
+
+==== Setting up your IDE
+
+(TODO)
+
+==== Run James with gradle
+
+Instead of running via docker-compose, use gradle, which will ... (TODO)
+
+
+[source, bash]
+--
+    ./gradlew :james-server:run
+--
+
+// I made changes up until this point
+
+== Plain Docker
 
 For completenes we will show how to also build the image with plain docker.
 
