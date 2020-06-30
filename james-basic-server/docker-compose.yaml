@@ -8,7 +8,7 @@ services:
     image: james-basic-server
     volumes:
       - ./conf:/opt/apache-james/james-basic-server/conf/
-      - ./logs:/opt/apache-james/james-basic-server/logs/
+      - ./logs:/opt/apache-james/logs/
     environment:
       - JAVA_OPTS=
         -Dlogback.configurationFile="/opt/apache-james/james-basic-server/conf/logback.xml" 
@@ -16,12 +16,4 @@ services:
     ports:
       - "9465:465"
       - "9993:993"
-      - "8000:8000"
-
-  james-cli:
-    build:
-      context: ..
-      dockerfile: james-cli/Dockerfile
-    image: james-cli
-    ports:
-      - "9999:9999"
+    entrypoint: ["james-basic-server"]

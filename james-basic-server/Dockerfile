@@ -47,9 +47,11 @@ COPY --from=unpack $install_prefix ${install_prefix}
 # We are going to mount the configuraton as a volume
 # COPY conf ${install_prefix}/james-server/conf
 
-WORKDIR ${install_prefix}/james-basic-server
+WORKDIR ${install_prefix}
 
 # Add start scripts to path
 ENV PATH="${PATH}:${install_prefix}/james-basic-server/bin:${install_prefix}/james-cli/bin"
 
-ENTRYPOINT james-basic-server
+
+ENTRYPOINT ["james-cli"]
+CMD ["-help"]

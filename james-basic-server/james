@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run james-cli java -jar /opt/apache-james/james-cli/lib/james-cli.jar -h 127.0.0.1 -p 9999 $@
+docker exec james-basic-server_james_1 james-cli $@
