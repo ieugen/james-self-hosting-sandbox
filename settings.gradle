@@ -1,10 +1,11 @@
 rootProject.name = 'james-self-hosting-sandbox'
 
-// Custom workspace
+// Custom workspace (intended as sandbox for aggressive development)
 include ':james-cli'
-include ':james-extensions'
-include ':james-custom-server'
+//include ':james-extensions'
+//include ':james-custom-server'
 
-// James workspace
+// James workspace (intended a prototype of project to be provided for Operators)
+include ':james-mailets'
 include ':james-basic-server'
 include ':james-extendable-server'

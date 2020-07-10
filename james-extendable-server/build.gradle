@@ -9,19 +9,23 @@ java {
 }
 
 dependencies {
+  implementation "com.google.inject:guice:4.2.2"
   implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+  implementation "org.apache.james:james-server-guice-smtp:${jamesVersion}"
+  implementation project(":james-mailets")
 }
 
-// See https://docs.gradle.org/current/userguide/application_plugin.html#header
+def jamesMainClass = 'net.leangen.james.ExtendableServer'
 
 application {
-  mainClass = 'org.apache.james.JPAJamesServerMain'
+  mainClass = jamesMainClass
+
 }
 
 task runJamesServer(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
 
-  main = 'org.apache.james.JPAJamesServerMain'
+  main = jamesMainClass
 
   // arguments to pass to the application
   jvmArgs "-Dlogback.configurationFile=${project.rootDir}/conf/logback.xml"
