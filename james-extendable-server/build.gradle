@@ -19,15 +19,9 @@ def jamesMainClass = 'net.leangen.james.ExtendableServer'
 
 application {
   mainClass = jamesMainClass
-
-}
-
-task runJamesServer(type: JavaExec) {
-  classpath = sourceSets.main.runtimeClasspath
-
-  main = jamesMainClass
-
-  // arguments to pass to the application
-  jvmArgs "-Dlogback.configurationFile=${project.rootDir}/conf/logback.xml"
-  jvmArgs "-Dworking.directory=${project.rootDir}/"
+  def thisProjectDir = "${project.rootDir}/james-extendable-server"
+  println("Dir:" + thisProjectDir)
+  def workingDir = "${thisProjectDir}"
+  def configFile = "${workingDir}/conf/logback.xml"
+  applicationDefaultJvmArgs = ["-Dlogback.configurationFile=${configFile}", "-Dworking.directory=${workingDir}"]
 }

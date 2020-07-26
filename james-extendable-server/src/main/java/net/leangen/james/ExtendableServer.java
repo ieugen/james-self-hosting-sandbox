@@ -37,6 +37,8 @@ import org.apache.james.modules.server.WebAdminServerModule;
 import org.apache.james.modules.spamassassin.SpamAssassinListenerModule;
 import org.apache.james.server.core.configuration.Configuration;
 
+import java.nio.file.Paths;
+
 public class ExtendableServer implements JamesServerMain {
 
   private static final Module WEBADMIN =
@@ -82,7 +84,9 @@ public class ExtendableServer implements JamesServerMain {
   private static final Module JPA_MODULE_AGGREGATE = Modules.combine(JPA_SERVER_MODULE, PROTOCOLS);
 
   public static void main(String[] args) throws Exception {
-    Configuration configuration = Configuration.builder().useWorkingDirectoryEnvProperty().build();
+    Configuration configuration = Configuration.builder()
+            .useWorkingDirectoryEnvProperty()
+            .build();
 
     LOGGER.info("Loading configuration {}", configuration.toString());
     GuiceJamesServer server = createServer(configuration).combineWith(new JMXServerModule());
