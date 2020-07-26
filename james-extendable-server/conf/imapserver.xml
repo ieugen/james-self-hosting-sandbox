@@ -1,0 +1,27 @@
+<imapservers>
+
+    <imapserver enabled="true">
+
+       <jmxName>imapserver</jmxName>
+
+       <!--+
+           | Use 143 when running in Docker.
+           | Else use 9143 when running locally (for example in debug mode)
+           +-->
+       <!--bind>0.0.0.0:143</bind-->
+       <bind>0.0.0.0:9143</bind>
+
+       <connectionBacklog>200</connectionBacklog>
+
+       <tls socketTLS="false" startTLS="false">
+         <keystore>file://conf/keystore</keystore>
+         <secret>yoursecret</secret>
+         <provider>org.bouncycastle.jce.provider.BouncyCastleProvider</provider>
+       </tls>
+
+       <connectionLimit>0</connectionLimit>
+       <connectionLimitPerIP>0</connectionLimitPerIP>
+
+    </imapserver>
+
+</imapservers>

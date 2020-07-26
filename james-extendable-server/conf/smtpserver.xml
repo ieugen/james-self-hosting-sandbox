@@ -5,14 +5,14 @@
 
      <jmxName>smtpserver</jmxName>
 
-     <--+
+     <!--+
         | The port depends on how the server is run.
         | TODO: is there a way we can generalize this??
         +-->
-     <-- Use 465 when running in Docker -->
+     <!-- Use 465 when running in Docker -->
+     <!--bind>0.0.0.0:465</bind-->
+     <!-- Use 9465 when debugging in IntelliJ -->
      <bind>0.0.0.0:9465</bind>
-     <-- Use 9465 when debugging in IntelliJ -->
-     <--bind>0.0.0.0:9465</bind-->
 
      <connectionBacklog>200</connectionBacklog>
 
