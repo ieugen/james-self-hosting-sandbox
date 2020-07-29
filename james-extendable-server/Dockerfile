@@ -38,7 +38,7 @@ ARG install_prefix
 #   8000 Web Admin
 #
 
-EXPOSE 465 993 8000
+EXPOSE 465 143 8000
 
 COPY --from=unpack $install_prefix ${install_prefix}
 

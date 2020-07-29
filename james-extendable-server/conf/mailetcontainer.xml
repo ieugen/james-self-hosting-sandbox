@@ -3,7 +3,7 @@
 <mailetcontainer enableJmx="true">
 
   <context>
-    <postmaster>postmaster@example.net</postmaster>
+    <postmaster>postmaster@leangen.net</postmaster>
   </context>
 
   <spooler>
@@ -15,6 +15,12 @@
     <processor state="root" enableJmx="true">
       <mailet match="All" class="PostmasterAlias"/>
       <mailet match="RelayLimit=30" class="Null"/>
+
+      <mailet match="All" class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
+
+      <mailet match="net.leangen.james.mailet.sample.MatcherMadeInHeaven"
+              class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
+
       <mailet match="All" class="ToProcessor">
         <processor>transport</processor>
       </mailet>
@@ -112,13 +118,6 @@
       </mailet>
       <mailet match="IsSenderInRRTLoop" class="Null"/>
       <mailet match="All" class="Bounce"/>
-    </processor>
-
-    <processor state="do-nothing-mailet" enableJmx="false">
-      <mailet match="All" class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
-
-      <mailet match="net.leangen.james.mailet.sample.MatcherMadeInHeaven"
-        class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
     </processor>
 
   </processors>
