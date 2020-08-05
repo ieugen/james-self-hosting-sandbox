@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    | This is the configuration file required by the Logback logging system.
+    |
+    | You should normally not need to edit this file. Please do not remove it or
+    | make any changes unless you know what you are doing.
+    |
+    | Information about the Logback system can be found at http://logback.qos.ch/.
+    |
+    | Apache James uses the Logback system to output system logs. We have configured
+    | logback to provide minimal information for Operators to help understand the
+    | state of a running James Server.
+    |
+    | Additionally, we have configured Logback to output more detailed diagnostic
+    | information to a file located in logs/james.log. This output may come in 
+    | handy if you run into any issues and request help from James Developers.
+    +-->
+<configuration>
+
+        <!--+
+            | NOTE: I do not know what this is for! (dml)
+            +-->
+        <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+                <resetJUL>true</resetJUL>
+        </contextListener>
+
+        <!--+
+            | This entry suppresses logback (self) output.
+            +-->
+        <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+        <!--+
+            | Log minimal output to the console for the Operator.
+            +-->
+        <appender name="OPERATOR_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} %highlight([%-5level]) %logger{15} - %msg%n%rEx</pattern>
+                        <immediateFlush>false</immediateFlush>
+                </encoder>
+        </appender>
+
+        <!--+
+            | Log diagnostic output to file for Developers who may eventually provide support.
+            +-->
+        <appender name="DIAGNOSTIC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>logs/james.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <fileNamePattern>logs/james.%i.log.tar.gz</fileNamePattern>
+                    <minIndex>1</minIndex>
+                    <maxIndex>3</maxIndex>
+                </rollingPolicy>
+
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <maxFileSize>100MB</maxFileSize>
+                </triggeringPolicy>
+
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
+                        <immediateFlush>false</immediateFlush>
+                </encoder>
+        </appender>
+
+        <!--+
+            | Set the default root logger level to DEBUG for diagnostic output.
+            +-->
+        <root level="WARN">
+                <appender-ref ref="DIAGNOSTIC_FILE" />
+        </root>
+
+        <!--+
+            | Package-specific levels for Operator output.
+            +-->
+        <logger name="org.apache.james" level="INFO" additivity="false">
+            <appender-ref ref="DIAGNOSTIC_FILE" />
+        </logger>
+        <logger name="openjpa" level="NONE" additivity="false">
+            <appender-ref ref="OPERATOR_CONSOLE" />
+        </logger>
+
+</configuration>

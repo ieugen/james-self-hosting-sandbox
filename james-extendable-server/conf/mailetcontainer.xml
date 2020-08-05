@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+
+<mailetcontainer enableJmx="true">
+
+  <context>
+    <postmaster>postmaster@leangen.net</postmaster>
+  </context>
+
+  <spooler>
+    <threads>20</threads>
+    <errorRepository>file://var/mail/error/</errorRepository>
+  </spooler>
+
+  <processors>
+    <processor state="root" enableJmx="true">
+      <mailet match="All" class="PostmasterAlias"/>
+      <mailet match="RelayLimit=30" class="Null"/>
+
+      <mailet match="All" class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
+
+      <mailet match="net.leangen.james.mailet.sample.MatcherMadeInHeaven"
+              class="net.leangen.james.mailet.sample.LogAndDoNothingMailet"/>
+
+      <mailet match="All" class="ToProcessor">
+        <processor>transport</processor>
+      </mailet>
+    </processor>
+
+    <processor state="error" enableJmx="true">
+      <mailet match="All" class="MetricsMailet">
+        <metricName>mailetContainerErrors</metricName>
+      </mailet>
+      <mailet match="All" class="Bounce"/>
+      <mailet match="All" class="ToRepository">
+        <repositoryPath>file://var/mail/error/</repositoryPath>
+      </mailet>
+    </processor>
+
+    <processor state="transport" enableJmx="true">
+      <matcher name="relay-allowed" match="org.apache.james.mailetcontainer.impl.matchers.Or">
+        <matcher match="SMTPAuthSuccessful"/>
+        <matcher match="SMTPIsAuthNetwork"/>
+        <matcher match="SentByMailet"/>
+      </matcher>
+
+      <mailet match="All" class="RemoveMimeHeader">
+        <name>bcc</name>
+        <onMailetException>ignore</onMailetException>
+      </mailet>
+      <mailet match="All" class="RecipientRewriteTable">
+        <errorProcessor>rrt-error</errorProcessor>
+      </mailet>
+      <mailet match="RecipientIsLocal" class="Sieve"/>
+      <mailet match="RecipientIsLocal" class="AddDeliveredToHeader"/>
+      <mailet match="RecipientIsLocal" class="LocalDelivery"/>
+      <mailet match="HostIsLocal" class="ToProcessor">
+        <processor>local-address-error</processor>
+        <notice>550 - Requested action not taken: no such user here</notice>
+      </mailet>
+
+      <mailet match="relay-allowed" class="ToProcessor">
+        <processor>relay</processor>
+      </mailet>
+    </processor>
+
+    <processor state="relay" enableJmx="true">
+      <mailet match="All" class="RemoteDelivery">
+        <outgoingQueue>outgoing</outgoingQueue>
+        <delayTime>5000, 100000, 500000</delayTime>
+        <maxRetries>25</maxRetries>
+        <maxDnsProblemRetries>0</maxDnsProblemRetries>
+        <deliveryThreads>10</deliveryThreads>
+        <sendpartial>true</sendpartial>
+        <bounceProcessor>bounces</bounceProcessor>
+      </mailet>
+    </processor>
+
+    <processor state="local-address-error" enableJmx="true">
+      <mailet match="All" class="MetricsMailet">
+        <metricName>mailetContainerLocalAddressError</metricName>
+      </mailet>
+      <mailet match="All" class="Bounce">
+        <attachment>none</attachment>
+      </mailet>
+      <mailet match="All" class="ToRepository">
+        <repositoryPath>file://var/mail/address-error/</repositoryPath>
+      </mailet>
+    </processor>
+
+    <processor state="relay-denied" enableJmx="true">
+      <mailet match="All" class="MetricsMailet">
+        <metricName>mailetContainerRelayDenied</metricName>
+      </mailet>
+      <mailet match="All" class="Bounce">
+        <attachment>none</attachment>
+      </mailet>
+      <mailet match="All" class="ToRepository">
+        <repositoryPath>file://var/mail/relay-denied/</repositoryPath>
+        <notice>Warning: You are sending an e-mail to a remote server. You must be authenticated to
+          perform such an operation
+        </notice>
+      </mailet>
+    </processor>
+
+    <processor state="bounces" enableJmx="true">
+      <mailet match="All" class="MetricsMailet">
+        <metricName>bounces</metricName>
+      </mailet>
+      <mailet match="All" class="DSNBounce">
+        <passThrough>false</passThrough>
+      </mailet>
+    </processor>
+
+    <processor state="rrt-error" enableJmx="false">
+      <mailet match="All" class="ToRepository">
+        <repositoryPath>file://var/mail/rrt-error/</repositoryPath>
+        <passThrough>true</passThrough>
+      </mailet>
+      <mailet match="IsSenderInRRTLoop" class="Null"/>
+      <mailet match="All" class="Bounce"/>
+    </processor>
+
+  </processors>
+
+</mailetcontainer>
+
+

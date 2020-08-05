@@ -20,23 +20,18 @@ spotless {
 subprojects {
 
   ext {
+//    jamesVersion = '3.4.0'
     jamesVersion = '3.6.0-SNAPSHOT'
   }
 
   repositories {
-    // First look for local Apache James dependencies. We can publish code changes locally and work with them
-    // See caveats https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:case-for-maven-local
-    // Maybe avoid mavenLocal and use a directory with jars.
     mavenLocal()
 
-    // Next look into snapshots and staging
-    // https://infra.apache.org/repository-faq.html
-
-    maven { url "https://repository.apache.org/content/groups/public/" }
-    maven { url "https://repository.apache.org/content/groups/staging/" }
-    maven { url "https://repository.apache.org/content/groups/snapshots/" }
+//    maven { url "https://repository.apache.org/content/groups/public/" }
+//    maven { url "https://repository.apache.org/content/groups/staging/" }
+//    maven { url "https://repository.apache.org/content/groups/snapshots/" }
 
     mavenCentral()
-    jcenter()
+//    jcenter()
   }
 }

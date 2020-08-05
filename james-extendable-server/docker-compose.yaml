@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  james:
+    build:
+      context: ..
+      dockerfile: james-extendable-server/Dockerfile
+    image: james-extendable-server
+    volumes:
+      - ./conf:/opt/apache-james/james-extendable-server/conf/
+      - ./logs:/opt/apache-james/logs/
+      - ./data/mail:/opt/apache-james/james-extendable-server/var/mail/
+      - ./data/store:/opt/apache-james/var/store/
+      - ./data/store/activemq:/opt/apache-james/james-extendable-server/var/store/activemq/
+    environment:
+      - JAVA_OPTS=
+        -Dlogback.configurationFile="/opt/apache-james/james-extendable-server/conf/logback.xml" 
+        -Dworking.directory="/opt/apache-james/james-extendable-server"
+    ports:
+      - "9465:465"
+      - "9143:143"
+    entrypoint: ["james-extendable-server"]
