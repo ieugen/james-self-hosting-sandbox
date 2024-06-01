@@ -3,16 +3,16 @@ plugins {
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }
 
 
 dependencies {
 
-  annotationProcessor 'org.projectlombok:lombok:1.18.12'
-  compileOnly 'org.projectlombok:lombok:1.18.12'
-  testCompileOnly 'org.projectlombok:lombok:1.18.12'
+  annotationProcessor 'org.projectlombok:lombok:1.18.32'
+  compileOnly 'org.projectlombok:lombok:1.18.32'
+  testCompileOnly 'org.projectlombok:lombok:1.18.32'
 
   implementation "org.apache.james:apache-mailet-base:${jamesVersion}"
 

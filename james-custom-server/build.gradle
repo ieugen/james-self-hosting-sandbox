@@ -4,13 +4,15 @@ plugins {
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
 
-  implementation "org.apache.james:james-server-jpa-guice:${jamesVersion}"
+  implementation "org.apache.james:james-server-jpa-app:${jamesVersion}"
+  implementation "org.apache.james:queue-activemq-guice:${jamesVersion}"
+  implementation "org.apache.james:apache-james-spamassassin:${jamesVersion}"
 
   // add the custom extensions project
   implementation project(":james-extensions")

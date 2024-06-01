@@ -1,5 +1,5 @@
 plugins {
-  id "com.diffplug.gradle.spotless" version "4.3.0"
+  id "com.diffplug.spotless" version "6.25.0"
 }
 
 spotless {
@@ -20,7 +20,7 @@ spotless {
 subprojects {
 
   ext {
-    jamesVersion = '3.6.0-SNAPSHOT'
+    jamesVersion = '3.8.1'
   }
 
   repositories {
